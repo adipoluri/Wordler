@@ -1,2 +1,2 @@
-# Adis-Chegg
-Bot to scrape answers off of Chegg for free
+# Adis-Discord-bot
+Currently a use less bot for the messaging tool Discord
