@@ -1,0 +1,24 @@
+{
+  "name": "wordler",
+  "version": "1.0.0",
+  "description": "A Discord Bot that lets you play Wordle with your Friends!",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adipoluri/AdiBot-DiscordBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adipoluri/AdiBot-DiscordBot/issues"
+  },
+  "homepage": "https://github.com/adipoluri/AdiBot-DiscordBot#readme",
+  "dependencies": {
+    "axios": "^0.25.0",
+    "discord.js": "^13.6.0",
+    "dotenv": "^15.0.0"
+  }
+}
