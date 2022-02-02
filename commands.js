@@ -38,9 +38,9 @@ const letterText = (failedSet) => {
     for(let i = 0; i < 26; i++) {
         console.log(failedSet.has(LETTERS[i]));
         if(failedSet.has(LETTERS[i])){
-            retVal += "~~" + LETTERS[i] + "~~";
+            retVal += "~~" + LETTERS[i] + "~~ ";
         } else {
-            retVal += LETTERS[i];
+            retVal += LETTERS[i] + " ";
         }
     }
     return retVal;  
