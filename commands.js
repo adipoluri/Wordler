@@ -36,11 +36,10 @@ function wordleEmbed(data,letters)  {
 const letterText = (failedSet) => {
     let retVal = "";
     for(let i = 0; i < 26; i++) {
-        console.log(failedSet.has(LETTERS[i]));
         if(failedSet.has(LETTERS[i])){
             retVal += "~~" + LETTERS[i] + "~~ ";
         } else {
-            retVal += LETTERS[i] + " ";
+            retVal += "**" + LETTERS[i].toUpperCase() + "** ";
         }
     }
     return retVal;  
@@ -105,15 +104,6 @@ const startGame = async (msg, args, corpus, lobbies) => {
     const stateInd = msg.channel.id;
     
     let wordLength = '5';
-    if (args.length > 0) {
-        wordLength = args[0];
-    }
-    console.log(wordLength);
-    if (!VALID_LENGTHS.includes(wordLength)) {
-        msg.channel.send("Please enter a valid word length");
-        return;
-    }
-
     const words = corpus[wordLength];
     const randomWord = words[Math.floor(Math.random() * words.length)];
     const game = wordleEmbed("","abcdefghijklmnopqrstuvwxyz");
@@ -153,7 +143,6 @@ const guess = (msg, args, corpus, lobbies) => {
         return;
     }
     
-    console.log(corpus[wordGuess.length.toString()].includes(wordGuess))
     if (!corpus[wordGuess.length.toString()].includes(wordGuess)){
         return;
     }
@@ -164,7 +153,7 @@ const guess = (msg, args, corpus, lobbies) => {
     const success = numSuccess === lobbies[msg.channel.id].length;
     const guessCount = lobbies[msg.channel.id].guesses += 1;
     let newLine = testResult.map((r) => RESPONSE_EMOJI[r]).join('');
-    newLine += wordGuess.split('').join(' ') + "\n";
+    newLine += " " + wordGuess.split('').join(' ') + "\n";
     lobbies[msg.channel.id].data += newLine;
     lobbies[msg.channel.id].letters = union(lobbies[msg.channel.id].letters, letters);
 

@@ -11,8 +11,8 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 //Bot Data
 const prefix = "!";
 const lobbies = {};
-const words = {};
-Corpus.loadCorpus(words);
+const guesses = {};
+Corpus.loadCorpusGuesses(guesses);
 
 
 client.on('ready', () => {
@@ -26,7 +26,7 @@ const executeCommand = (msg, command) => {
     const commandFunc = commands[command.command];
     if (commandFunc != null) {
 
-      const reply = commandFunc(msg, command.args, words, lobbies);
+      const reply = commandFunc(msg, command.args, guesses, lobbies);
       msg.delete();
     }
 };
