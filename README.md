@@ -4,11 +4,13 @@ Wordler is a discord bot that uses Discord.js to let you and your friends play W
 
 To use the bot type !wordle in a text-channel to create a Wordle Thread
 
-![Image](images/calling.PNG)
+![Image](images/calling.png)
 
 Then use !start to start a wordle game and !g <word> to guess a word!
 
 ![Image](images/guesses.PNG)
 
+
+Feel free to build this project yourself and build off of it!
 
 Credit goes to [siddhu33](https://github.com/siddhu33/discordle) for the inspiration (and some code!)
