@@ -16,17 +16,22 @@ const defaultState = (started = false, length = -1, word = '', guesses = -1) => 
   letters: new Set(),
 });
 
-function wordleEmbed(data,letters)  {
+function wordleEmbed(data,letters, win = false)  {
+    let color = 0xff0000;
+    if(win){
+        color = 0x00ff1e;
+    }
+
     return new MessageEmbed()
     .setAuthor({
         name: 'WORDLER',
         iconURL:'https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco,dpr_1/v1397203448/0c20b28720f32a98d7c64f9655341edc.png'})
-    .setTitle('Type "!g" <word> to guess the word!')
+    .setTitle('Type "!g word" to guess the word!')
     .setDescription(data)
     .addFields(
         {name: 'Letters Left', value: letters},
     )
-    .setColor(0x0099ff)
+    .setColor(color)
     .setFooter(
         {text:'Made by Adi Poluri', 
         iconURL:'https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco,dpr_1/v1397203448/0c20b28720f32a98d7c64f9655341edc.png'}
@@ -56,17 +61,23 @@ function union(setA, setB) {
 const testWord = (guess, answer) => {
     const results = [];
     const letters = new Set();
-    for (let i = 0; i < guess.length; i += 1) {
-        const char = guess[i];
-        if (char === answer[i]) {
-            results.push('2');
-        } else if (answer.includes(char)) {
-            results.push('1');
-        } else {
-            results.push('0');
-            letters.add(char);
+
+    for (let i = 0; i < guess.length; i++) {
+        let guessLetter = guess.charAt(i);
+        let solutionLetter = answer.charAt(i);
+
+        if (guessLetter === solutionLetter) {
+            results.push("2");
+        }
+        else if (answer.indexOf(guessLetter) != -1) {
+            results.push("1");
+        }
+        else {
+            results.push("0");
+            letters.add(guessLetter);
         }
     }
+    
     return [results, letters];
 };
 
@@ -105,7 +116,7 @@ const startGame = async (msg, args, corpus, lobbies) => {
     
     let wordLength = '5';
     const words = corpus[wordLength];
-    const randomWord = words[Math.floor(Math.random() * words.length)];
+    const randomWord = words[Math.floor(Math.random() * (12972-10658+1)+10658)];
     const game = wordleEmbed("","abcdefghijklmnopqrstuvwxyz");
     
     console.log(`random word ${randomWord} selected`);
@@ -158,11 +169,11 @@ const guess = (msg, args, corpus, lobbies) => {
     lobbies[msg.channel.id].letters = union(lobbies[msg.channel.id].letters, letters);
 
     msg.channel.send('Guess #' + guessCount);
-    msg.channel.send({ embeds: [wordleEmbed(lobbies[msg.channel.id].data, letterText(lobbies[msg.channel.id].letters))] });
+    msg.channel.send({ embeds: [wordleEmbed(lobbies[msg.channel.id].data, letterText(lobbies[msg.channel.id].letters), success)] });
 
 
     if (success) {
-        msg.channel.send(`Congrats on winning the game! Type !start to play another round!`);
+        msg.channel.send(':tada: Congrats **'+ msg.author.tag +"** for guessing **" + wordGuess.toUpperCase() + "** and winning the game! Type !start to play another round!");
         lobbies[msg.channel.id] = defaultState(false, -1, '', 0);
         return;
     }
